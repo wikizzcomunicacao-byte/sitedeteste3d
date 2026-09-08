@@ -3,87 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador 3D</title>
-    
-    <!-- Importa a biblioteca do Google Model Viewer -->
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <title>Apresentação do Projeto - 3D</title>
     
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+
+        /* Área de exibição de imagem/banner em alta qualidade */
+        .preview-box {
+            width: 100%;
+            height: 420px;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            border-radius: 14px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 2px dashed #94a3b8;
         }
 
-        .card {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-            text-align: center;
-            max-width: 680px;
+        .preview-box img {
             width: 100%;
-            box-sizing: border-box;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
         }
 
-        h1 {
-            color: #1e293b;
-            font-size: 1.8rem;
-            margin-top: 0;
-            margin-bottom: 8px;
+        .placeholder-text {
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
-        p.subtitle {
-            color: #64748b;
-            font-size: 0.95rem;
-            margin-bottom: 24px;
+        /* Botões de ação */
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        /* Estilização aprimorada do visualizador 3D */
-        model-viewer {
-            width: 100%;
-            height: 480px;
-            background-color: #f8fafc;
-            border-radius: 14px;
-            border: 1px solid #e2e8f0;
-            outline: none;
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            text-decoration: none;
         }
 
-        .hint {
-            margin-top: 15px;
-            font-size: 0.85rem;
-            color: #475569;
-            background-color: #f1f5f9;
-            padding: 10px;
-            border-radius: 8px;
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e1;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Visualização do Modelo 3D</h1>
-        <p class="subtitle">Gire com o mouse ou toque na tela para explorar os detalhes.</p>
+    <div class="container">
+        <h1>Projeto em 3D</h1>
+        <p class="subtitle">Apresentação visual e detalhes técnicos do modelo desenvolvido.</p>
 
-        <!-- Componente do modelo 3D -->
-        <!-- Lembre-se de alterar "seu-arquivo.glb" para o nome real do seu arquivo -->
-        <model-viewer 
-            src="seu-arquivo.glb" 
-            alt="Modelo 3D" 
-            auto-rotate 
-            camera-controls 
-            ar
-            shadow-intensity="1">
-        </model-viewer>
+        <!-- Caixa de Visualização (Substitua a tag <img> pela foto/render do seu projeto se quiser) -->
+        <div class="preview-box">
+            <!-- Exemplo de como inserir uma imagem de pré-via gerada do seu modelo 3D: -->
+            <!-- <img src="sua-imagem-render.png" alt="Render 3D"> -->
+            
+            <div class="placeholder-text">
+                📷 Área para Render / Imagem do Projeto
+            </div>
+            <p style="font-size: 0.85rem; margin-top: 5px;">(Super leve e carrega instantaneamente)</p>
+        </div>
 
-        <div class="hint">
-            💡 Lembre-se de colocar o seu arquivo <code>.glb</code> na mesma pasta deste HTML e atualizar o nome em <code>src="..."</code>.
+        <!-- Botões de interação -->
+        <div class="actions">
+            <a href="#" class="btn" onclick="alert('Funcionalidade de download ou contato!')">Baixar Especificações</a>
+            <a href="#" class="btn btn-secondary" onclick="window.location.reload()">Atualizar Página</a>
         </div>
     </div>
 
