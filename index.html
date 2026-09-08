@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador 3D Interativo</title>
+    <title>Visualizador 3D - Senhora Lavanderia</title>
     
     <!-- Importa a biblioteca do Google Model Viewer -->
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
@@ -35,7 +35,7 @@
             max-width: 800px;
             background-color: var(--card-bg);
             border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
             padding: 24px;
             box-sizing: border-box;
             text-align: center;
@@ -49,46 +49,30 @@
         p.subtitle {
             color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         /* Estilização do Visualizador 3D */
         model-viewer {
             width: 100%;
-            height: 500px;
+            height: 450px;
             background-color: #090d16;
             border-radius: 12px;
             outline: none;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
-        /* Barra de Carregamento Personalizada */
-        .progress-bar {
-            display: block;
-            width: 33%;
-            height: 6px;
-            max-height: 6px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            overflow: hidden;
+        /* Dica ou Aviso Importante */
+        .notice {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 8px;
         }
 
-        .progress-bar.hide {
-            visibility: hidden;
-            transition: visibility 0.3s;
-        }
-
-        .update-bar {
-            background-color: var(--primary-color);
-            width: 0%;
-            height: 100%;
-            transition: width 0.3s;
-        }
-
-        /* Painel de Controles / Botões Abaixo do Modelo */
+        /* Botões de interação */
         .controls {
             margin-top: 16px;
             display: flex;
@@ -120,26 +104,26 @@
 <body>
 
     <div class="container">
-        <h1>Visualização em 3D</h1>
-        <p class="subtitle">Gire, amplie e explore o modelo em detalhes ou use a Realidade Aumentada pelo celular.</p>
+        <h1>Visualizador 3D</h1>
+        <p class="subtitle">Gire com o mouse ou toque para explorar todos os ângulos.</p>
 
-        <!-- Componente do modelo 3D -->
+        <!-- Componente do modelo 3D 
+             ATENÇÃO: Mude o texto "seu-arquivo.glb" abaixo para o nome real do seu arquivo! -->
         <model-viewer 
             id="modelo3d"
             src="seu-arquivo.glb" 
-            alt="Modelo 3D Interativo" 
+            alt="Modelo 3D" 
             auto-rotate 
             camera-controls 
             ar
             shadow-intensity="1">
-            
-            <!-- Indicador de progresso de carregamento -->
-            <div class="progress-bar" slot="progress-bar">
-                <div class="update-bar"></div>
-            </div>
         </model-viewer>
 
-        <!-- Botões de interação extra -->
+        <div class="notice">
+            💡 <strong>Dica:</strong> Se a tela preta persistir, certifique-se de que o arquivo <code>.glb</code> está na mesma pasta que este arquivo HTML e que o nome em <code>src=" "</code> está idêntico.
+        </div>
+
+        <!-- Botões de controle -->
         <div class="controls">
             <button class="btn" onclick="alternarRotacao()">Ligar/Desligar Rotação</button>
             <button class="btn" onclick="resetarCamera()">Centralizar Câmera</button>
@@ -149,12 +133,10 @@
     <script>
         const modelViewer = document.querySelector('#modelo3d');
 
-        // Função para alternar o giro automático
         function alternarRotacao() {
             modelViewer.autoRotate = !modelViewer.autoRotate;
         }
 
-        // Função para resetar a posição da câmera
         function resetarCamera() {
             modelViewer.cameraTarget = 'auto';
             modelViewer.jumpCameraToGoal();
