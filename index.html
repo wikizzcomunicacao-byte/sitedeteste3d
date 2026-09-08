@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Immersive.io | Experiência 3D & WebGL Avançada</title>
-    <meta name="description" content="Landing page imersiva com Three.js, GSAP e WebGL de alta performance.">
+    <title>Immersive.io | Studio 3D & WebGL Avançado</title>
+    <meta name="description" content="Experiência digital imersiva com Three.js, GSAP e objetos 3D interativos.">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -28,283 +28,265 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Three.js para renderização 3D e Partículas WebGL -->
+    <!-- Three.js (Core) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- GSAP (GreenSock Animation Platform) para Animações Complexas -->
+    <!-- Three.js GLTFLoader (Para carregar objetos .glb/.gltf reais) -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <!-- GSAP (GreenSock Animation Platform) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        .glass-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .glass-card:hover {
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 0 40px rgba(99, 102, 241, 0.2);
+        .glass-panel:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.15);
         }
-        /* Canvas do Three.js fixo no fundo */
         #webgl-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            pointer-events: none;
             z-index: 0;
+            pointer-events: auto; /* Permite interação direta com o mouse no espaço 3D */
         }
     </style>
 </head>
 <body class="bg-bgDark text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-accentGlow selection:text-white">
 
-    <!-- Canvas WebGL / Three.js de Fundo -->
+    <!-- Canvas WebGL / Three.js 3D Fixo -->
     <canvas id="webgl-canvas"></canvas>
 
     <!-- HEADER / MENU SUPERIOR -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-bgDark/70 backdrop-blur-md border-b border-white/10">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-bgDark/60 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span class="font-black tracking-wider text-base uppercase bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Immersive.io</span>
+                <span class="w-3 h-3 rounded-full bg-indigo-500 animate-ping"></span>
+                <span class="font-black tracking-wider text-base uppercase bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Immersive Studio</span>
             </div>
             <nav class="hidden md:flex items-center gap-8 text-xs font-semibold text-slate-400 uppercase tracking-widest">
-                <a href="#inicio" class="hover:text-white transition-colors">Início</a>
-                <a href="#tecnologia" class="hover:text-white transition-colors">Tecnologia</a>
-                <a href="#performance" class="hover:text-white transition-colors">Performance</a>
+                <a href="#inicio" class="hover:text-white transition-colors">Showcase</a>
+                <a href="#experiencia" class="hover:text-white transition-colors">Tecnologia</a>
                 <a href="#contato" class="hover:text-white transition-colors">Contato</a>
             </nav>
             <a href="#contato" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-accentGlow to-accentPink text-xs font-bold text-white shadow-lg shadow-accentGlow/20 hover:scale-105 transition-all">
-                Iniciar Projeto 🚀
+                Encomendar Projeto 🚀
             </a>
         </div>
     </header>
 
-    <!-- HERO SECTION IMERSIVA -->
-    <section id="inicio" class="relative z-10 min-h-screen pt-32 pb-20 px-6 flex flex-col items-center justify-center text-center">
+    <!-- HERO SECTION COM FOCO 3D -->
+    <section id="inicio" class="relative z-10 min-h-screen pt-32 pb-20 px-6 flex flex-col items-center justify-between text-center pointer-events-none">
         
-        <div class="hero-badge opacity-0 inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card text-xs font-medium text-slate-300 mb-8 shadow-2xl">
-            <span class="text-accentCyan font-bold">● WebGL Ativo</span> Experiência 3D em Tempo Real
+        <div class="w-full max-w-4xl mx-auto flex flex-col items-center pointer-events-auto">
+            <div class="hero-badge opacity-0 inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-xs font-medium text-slate-300 mb-6 shadow-2xl">
+                <span class="text-accentCyan font-bold">● Motor 3D Ativo</span> Arraste o mouse para interagir com o objeto
+            </div>
+
+            <h1 class="hero-title opacity-0 text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight max-w-4xl leading-[1.1] mb-6">
+                Websites Imersivos com <br>
+                <span class="bg-gradient-to-r from-accentGlow via-purple-400 to-accentPink bg-clip-text text-transparent">
+                    Modelos 3D Reais
+                </span>
+            </h1>
+
+            <p class="hero-desc opacity-0 text-slate-400 text-sm sm:text-base max-w-xl font-normal leading-relaxed mb-8">
+                Transforme visitantes em clientes através de experiências tridimensionais interativas renderizadas diretamente no navegador via WebGL.
+            </p>
         </div>
 
-        <h1 class="hero-title opacity-0 text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight max-w-5xl leading-[1.05] mb-8">
-            Programação Criativa & <br>
-            <span class="bg-gradient-to-r from-accentGlow via-purple-400 to-accentPink bg-clip-text text-transparent">
-                Animações GSAP
-            </span>
-        </h1>
-
-        <p class="hero-desc opacity-0 text-slate-400 text-base sm:text-lg max-w-2xl font-normal leading-relaxed mb-12">
-            Desenvolvido com motores gráficos 3D (Three.js) e transições sincronizadas de altíssima performance para prender a atenção do usuário.
-        </p>
-
-        <!-- Cartão 3D Interativo -->
-        <div id="interactiveCard" class="hero-card opacity-0 relative w-full max-w-xl p-8 rounded-3xl glass-card flex flex-col items-center gap-6 transition-transform duration-100 ease-out">
-            <div class="absolute -top-3 px-4 py-1 rounded-full bg-accentGlow/20 border border-accentGlow/40 text-[10px] font-black uppercase tracking-widest text-indigo-300">
-                Física e Interação 3D
-            </div>
-
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-accentGlow to-accentPink flex items-center justify-center text-white shadow-xl shadow-accentGlow/30 mt-2">
-                <i data-lucide="box" class="w-8 h-8"></i>
-            </div>
-
-            <div class="text-center">
-                <h3 class="text-xl font-bold tracking-tight mb-1">Câmera Reativa ao Mouse</h3>
-                <p class="text-slate-400 text-xs max-w-sm">
-                    As partículas ao fundo e este painel acompanham sutilmente o eixo do seu cursor através de cálculos vetoriais.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-3 gap-3 w-full pt-2">
-                <div class="p-3 rounded-2xl bg-white/5 border border-white/5 text-center">
-                    <span class="block text-accentCyan font-black text-sm">60 FPS</span>
-                    <span class="text-[10px] text-slate-500 uppercase">Estável</span>
+        <!-- Barra de Status / Controles HUD Inferiores -->
+        <div class="hero-hud opacity-0 w-full max-w-2xl mx-auto flex items-center justify-between p-4 rounded-2xl glass-panel pointer-events-auto mt-auto">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-accentGlow/20 flex items-center justify-center text-accentGlow">
+                    <i data-lucide="box" class="w-4 h-4"></i>
                 </div>
-                <div class="p-3 rounded-2xl bg-white/5 border border-white/5 text-center">
-                    <span class="block text-accentPink font-black text-sm">Three.js</span>
-                    <span class="text-[10px] text-slate-500 uppercase">Engine</span>
+                <div class="text-left">
+                    <span class="block text-xs font-bold text-white">Objeto Ativo: Esfera Prateada PBR</span>
+                    <span class="text-[10px] text-slate-400">Substitua pelo seu arquivo .glb</span>
                 </div>
-                <div class="p-3 rounded-2xl bg-emerald-400 font-black text-sm p-3 rounded-2xl bg-white/5 border border-white/5 text-center">
-                    <span class="block text-emerald-400 font-black text-sm">GSAP</span>
-                    <span class="text-[10px] text-slate-500 uppercase">Motion</span>
-                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="toggleWireframe()" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-[11px] font-bold text-slate-300 hover:bg-white/10 transition-all">
+                    Alternar Malha
+                </button>
             </div>
         </div>
 
     </section>
 
-    <!-- SEÇÃO DE TECNOLOGIA -->
-    <section id="tecnologia" class="relative z-10 py-32 px-6 max-w-7xl mx-auto">
+    <!-- SEÇÃO DE RECURSOS E ENGENHARIA -->
+    <section id="experiencia" class="relative z-10 py-32 px-6 max-w-7xl mx-auto pointer-events-auto">
         <div class="text-center max-w-xl mx-auto mb-20">
-            <span class="text-xs font-bold text-accentGlow uppercase tracking-widest">Stack Tecnológica</span>
-            <h2 class="text-3xl sm:text-5xl font-black tracking-tight mt-2 mb-4">Arquitetura de Ponta</h2>
-            <p class="text-slate-400 text-sm">Ferramentas líderes de mercado integradas para entregar máxima imersão visual.</p>
+            <span class="text-xs font-bold text-accentGlow uppercase tracking-widest">Excelência Gráfica</span>
+            <h2 class="text-3xl sm:text-5xl font-black tracking-tight mt-2 mb-4">Como aplicamos o 3D</h2>
+            <p class="text-slate-400 text-sm">Estrutura completa desenvolvida para alta performance comercial.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="p-8 rounded-3xl glass-card group">
+            <div class="p-8 rounded-3xl glass-panel group">
                 <div class="w-14 h-14 rounded-2xl bg-accentGlow/10 text-accentGlow flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <i data-lucide="cpu" class="w-7 h-7"></i>
+                    <i data-lucide="smartphone" class="w-7 h-7"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">Three.js / WebGL</h3>
-                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Renderização acelerada por GPU para criar campos estelares, malhas 3D e texturas complexas otimizadas.</p>
+                <h3 class="text-xl font-bold mb-3">Leve e Responsivo</h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Os modelos 3D são compactados e otimizados para carregar instantaneamente em computadores e celulares.</p>
             </div>
 
-            <div class="p-8 rounded-3xl glass-card group">
+            <div class="p-8 rounded-3xl glass-panel group">
                 <div class="w-14 h-14 rounded-2xl bg-accentPink/10 text-accentPink flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <i data-lucide="activity" class="w-7 h-7"></i>
+                    <i data-lucide="layers" class="w-7 h-7"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">GSAP Motion</h3>
-                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Linhas do tempo sincronizadas e animações baseadas em scroll que transformam páginas comuns em experiências cinematográficas.</p>
+                <h3 class="text-xl font-bold mb-3">Shaders de Estúdio</h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Iluminação PBR avançada que simula reflexos metálicos, vidros e texturas idênticas ao mundo real.</p>
             </div>
 
-            <div class="p-8 rounded-3xl glass-card group">
+            <div class="p-8 rounded-3xl glass-panel group">
                 <div class="w-14 h-14 rounded-2xl bg-accentCyan/10 text-accentCyan flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <i data-lucide="zap" class="w-7 h-7"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">Performance Extrema</h3>
-                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Compactação rigorosa de assets e código limpo para garantir carregamento instantâneo sem perda de quadros.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SEÇÃO DE PERFORMANCE / MÉTRICAS -->
-    <section id="performance" class="relative z-10 py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div class="p-6 rounded-2xl glass-card">
-                <span class="block text-3xl sm:text-4xl font-black text-white mb-1">60 FPS</span>
-                <span class="text-xs text-slate-400 font-medium">Taxa de Quadros Constante</span>
-            </div>
-            <div class="p-6 rounded-2xl glass-card">
-                <span class="block text-3xl sm:text-4xl font-black text-accentCyan mb-1">0.4s</span>
-                <span class="text-xs text-slate-400 font-medium">Tempo de Render Inicial</span>
-            </div>
-            <div class="p-6 rounded-2xl glass-card">
-                <span class="block text-3xl sm:text-4xl font-black text-accentPink mb-1">100%</span>
-                <span class="text-xs text-slate-400 font-medium">Responsivo WebGL</span>
-            </div>
-            <div class="p-6 rounded-2xl glass-card">
-                <span class="block text-3xl sm:text-4xl font-black text-emerald-400 mb-1">GPU</span>
-                <span class="text-xs text-slate-400 font-medium">Aceleração por Hardware</span>
+                <h3 class="text-xl font-bold mb-3">Foco em Vendas</h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">O design imersivo prende a atenção do cliente por mais tempo, multiplicando as taxas de conversão.</p>
             </div>
         </div>
     </section>
 
     <!-- SEÇÃO DE CONTATO / CTA FINAL -->
-    <section id="contato" class="relative z-10 py-24 px-6 max-w-5xl mx-auto">
-        <div class="relative rounded-3xl glass-card p-10 sm:p-16 text-center overflow-hidden border border-accentGlow/30 shadow-[0_0_80px_rgba(99,102,241,0.2)]">
+    <section id="contato" class="relative z-10 py-24 px-6 max-w-5xl mx-auto pointer-events-auto">
+        <div class="relative rounded-3xl glass-panel p-10 sm:p-16 text-center overflow-hidden border border-accentGlow/30 shadow-[0_0_80px_rgba(99,102,241,0.2)]">
             <div class="absolute -right-20 -top-20 w-60 h-60 bg-accentGlow/20 rounded-full blur-3xl pointer-events-none"></div>
             
-            <h2 class="text-3xl sm:text-5xl font-black tracking-tight mb-6">Quer um site com esse nível <br>de tecnologia imersiva?</h2>
+            <h2 class="text-3xl sm:text-5xl font-black tracking-tight mb-6">Pronto para destacar sua empresa <br>com tecnologia 3D?</h2>
             <p class="text-slate-300 text-sm sm:text-base max-w-xl mx-auto mb-8">
-                Combinamos design de vanguarda no Figma e programação criativa em WebGL para destacar o seu negócio.
+                Entre em contato e vamos estruturar um projeto digital exclusivo e de alto impacto para o seu negócio.
             </p>
-            <a href="https://wa.me/5517997379074?text=Olá!%20Vi%20o%20projeto%20com%20Three.js%20e%20GSAP%20e%20quero%20um%20site%20assim." target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold text-sm shadow-xl shadow-emerald-600/30 hover:scale-105 transition-all">
+            <a href="https://wa.me/5517997379074?text=Olá!%20Quero%20desenvolver%20um%20site%20imersivo%20com%203D." target="_blank" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold text-sm shadow-xl shadow-emerald-600/30 hover:scale-105 transition-all">
                 <i data-lucide="message-circle" class="w-5 h-5"></i>
-                Solicitar Orçamento no WhatsApp
+                Falar com Especialista no WhatsApp
             </a>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="relative z-10 border-t border-white/10 py-12 px-6 text-center">
-        <p class="text-slate-500 text-xs">&copy; 2026 Immersive.io - Todos os direitos reservados.</p>
+    <footer class="relative z-10 border-t border-white/10 py-12 px-6 text-center pointer-events-auto">
+        <p class="text-slate-500 text-xs">&copy; 2026 Immersive Studio - Todos os direitos reservados.</p>
     </footer>
 
-    <!-- SCRIPTS DE COMPUTAÇÃO GRÁFICA (Three.js + GSAP + Parallax) -->
+    <!-- SCRIPT DO MOTOR GRÁFICO 3D (Three.js + GLTFLoader + Iluminação de Estúdio) -->
     <script>
         lucide.createIcons();
 
-        // --- 1. CONFIGURAÇÃO DO THREE.JS (PARTÍCULAS E CAMPO 3D FLUÍDO) ---
+        // --- 1. CONFIGURAÇÃO DA CENA 3D ---
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
         
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
 
-        // Criando partículas flutuantes no espaço 3D
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 1000;
-        const posArray = new Float32Array(particlesCount * 3);
+        // --- 2. ILUMINAÇÃO DE ESTÚDIO ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+        scene.add(ambientLight);
 
-        for(let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 10;
+        const pointLight1 = new THREE.PointLight(0x6366f1, 3, 50);
+        pointLight1.position.set(5, 5, 5);
+        scene.add(pointLight1);
+
+        const pointLight2 = new THREE.PointLight(0xec4899, 3, 50);
+        pointLight2.position.set(-5, -5, 2);
+        scene.add(pointLight2);
+
+        // --- 3. CRIANDO UM OBJETO 3D DE TESTE (OU CARREGADOR .GLTF) ---
+        // Aqui criamos uma Esfera Metálica PBR de alta qualidade como demonstração imediata.
+        // Para colocar o seu objeto real, bastaria substituir este bloco pelo GLTFLoader comentado abaixo.
+        
+        const geometry = new THREE.SphereGeometry(1.2, 64, 64);
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x6366f1,
+            metalness: 0.9,
+            roughness: 0.1,
+            wireframe: false
+        });
+        
+        const mainObject = new THREE.Mesh(geometry, material);
+        scene.add(mainObject);
+
+        camera.position.z = 4;
+
+        /* 
+           EXEMPLO DE COMO CARREGAR SEU ARQUIVO .GLB REAL:
+           const loader = new THREE.GLTFLoader();
+           loader.load('seu-objeto.glb', (gltf) => {
+               scene.remove(mainObject); // Remove a esfera de teste
+               const meuObjetoReal = gltf.scene;
+               scene.add(meuObjetoReal);
+           });
+        */
+
+        // Função para alternar o modo wireframe da malha pelo HUD
+        let isWireframe = false;
+        function toggleWireframe() {
+            isWireframe = !isWireframe;
+            material.wireframe = isWireframe;
         }
 
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-        // Material brilhante para as partículas
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.015,
-            color: 0x6366f1,
-            transparent: true,
-            opacity: 0.8,
-        });
-
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-
-        camera.position.z = 3;
-
-        // Movimento dinâmico com o cursor do mouse
+        // --- 4. INTERAÇÃO DINÂMICA COM O MOUSE (PARALLAX 3D) ---
         let mouseX = 0;
         let mouseY = 0;
-        let targetX = 0;
-        let targetY = 0;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
 
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX - window.innerWidth / 2) / 1000;
-            mouseY = (event.clientY - window.innerHeight / 2) / 1000;
+        window.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - window.innerWidth / 2) / 200;
+            mouseY = (event.clientY - window.innerHeight / 2) / 200;
         });
 
-        // Loop de animação contínua (Render a 60 FPS)
-        const clock = new THREE.Clock();
+        // Suporte a toque para celulares
+        window.addEventListener('touchmove', (event) => {
+            if(event.touches.length > 0) {
+                mouseX = (event.touches[0].clientX - window.innerWidth / 2) / 100;
+                mouseY = (event.touches[0].clientY - window.innerHeight / 2) / 100;
+            }
+        });
 
-        function animateThree() {
-            targetX += (mouseX - targetX) * 0.05;
-            targetY += (mouseY - targetY) * 0.05;
+        // --- 5. LOOP DE RENDERIZAÇÃO A 60 FPS ---
+        function animate() {
+            requestAnimationFrame(animate);
 
-            const elapsedTime = clock.getElapsedTime();
-            particlesMesh.rotation.y = elapsedTime * 0.05 + targetX;
-            particlesMesh.rotation.x = -elapsedTime * 0.03 + targetY;
+            // Inércia suave na rotação baseada na posição do mouse
+            targetRotationX += (mouseY - targetRotationX) * 0.05;
+            targetRotationY += (mouseX - targetRotationY) * 0.05;
+
+            mainObject.rotation.x = targetRotationX + Date.now() * 0.0005;
+            mainObject.rotation.y = targetRotationY + Date.now() * 0.0008;
 
             renderer.render(scene, camera);
-            requestAnimationFrame(animateThree);
         }
-        animateThree();
+        animate();
 
-        // Ajuste responsivo da tela
+        // Ajuste automático de redimensionamento da janela
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // --- 2. ANIMAÇÕES DE ENTRADA COM GSAP ---
+        // --- 6. ANIMAÇÕES DE ENTRADA COM GSAP ---
         window.addEventListener('DOMContentLoaded', () => {
             const tl = gsap.timeline();
 
-            tl.to('.hero-badge', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', y: 20 }, '+=0.2')
+            tl.to('.hero-badge', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', y: 0 }, '+=0.2')
               .to('.hero-title', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', y: 0 }, '-=0.6')
               .to('.hero-desc', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', y: 0 }, '-=0.8')
-              .to('.hero-card', { opacity: 1, scale: 1, duration: 1.2, ease: 'back.out(1.7)', y: 0 }, '-=0.6');
+              .to('.hero-hud', { opacity: 1, scale: 1, duration: 1.2, ease: 'back.out(1.7)', y: 0 }, '-=0.6');
 
-            // Ajustando posições iniciais para o efeito GSAP
             gsap.set('.hero-badge, .hero-title, .hero-desc', { y: 30 });
-            gsap.set('.hero-card', { scale: 0.9, y: 40 });
-        });
-
-        // --- 3. EFEITO PARALLAX NO CARTÃO INTERATIVO ---
-        const card = document.getElementById('interactiveCard');
-        document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 20;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 20;
-            card.style.transform = `translateY(-10px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
-
-        document.addEventListener('mouseleave', () => {
-            card.style.transform = `translateY(0px) rotateY(0deg) rotateX(0deg)`;
+            gsap.set('.hero-hud', { scale: 0.9, y: 40 });
         });
     </script>
 </body>
