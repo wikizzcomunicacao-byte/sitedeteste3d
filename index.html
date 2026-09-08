@@ -3,24 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador 3D - Senhora Lavanderia</title>
+    <title>Visualizador 3D</title>
     
     <!-- Importa a biblioteca do Google Model Viewer -->
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     
     <style>
-        :root {
-            --primary-color: #2563eb;
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -30,87 +21,59 @@
             min-height: 100vh;
         }
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-            padding: 24px;
-            box-sizing: border-box;
+        .card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
             text-align: center;
+            max-width: 680px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         h1 {
-            font-size: 1.75rem;
+            color: #1e293b;
+            font-size: 1.8rem;
+            margin-top: 0;
             margin-bottom: 8px;
         }
 
         p.subtitle {
-            color: var(--text-muted);
+            color: #64748b;
             font-size: 0.95rem;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        /* Estilização do Visualizador 3D */
+        /* Estilização aprimorada do visualizador 3D */
         model-viewer {
             width: 100%;
-            height: 450px;
-            background-color: #090d16;
-            border-radius: 12px;
+            height: 480px;
+            background-color: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
             outline: none;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
-        /* Dica ou Aviso Importante */
-        .notice {
+        .hint {
             margin-top: 15px;
             font-size: 0.85rem;
-            color: #cbd5e1;
-            background: rgba(255, 255, 255, 0.05);
+            color: #475569;
+            background-color: #f1f5f9;
             padding: 10px;
             border-radius: 8px;
-        }
-
-        /* Botões de interação */
-        .controls {
-            margin-top: 16px;
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        button.btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-        }
-
-        button.btn:hover {
-            background-color: #1d4ed8;
-        }
-
-        button.btn:active {
-            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Visualizador 3D</h1>
-        <p class="subtitle">Gire com o mouse ou toque para explorar todos os ângulos.</p>
+    <div class="card">
+        <h1>Visualização do Modelo 3D</h1>
+        <p class="subtitle">Gire com o mouse ou toque na tela para explorar os detalhes.</p>
 
-        <!-- Componente do modelo 3D 
-             ATENÇÃO: Mude o texto "seu-arquivo.glb" abaixo para o nome real do seu arquivo! -->
+        <!-- Componente do modelo 3D -->
+        <!-- Lembre-se de alterar "seu-arquivo.glb" para o nome real do seu arquivo -->
         <model-viewer 
-            id="modelo3d"
             src="seu-arquivo.glb" 
             alt="Modelo 3D" 
             auto-rotate 
@@ -119,29 +82,10 @@
             shadow-intensity="1">
         </model-viewer>
 
-        <div class="notice">
-            💡 <strong>Dica:</strong> Se a tela preta persistir, certifique-se de que o arquivo <code>.glb</code> está na mesma pasta que este arquivo HTML e que o nome em <code>src=" "</code> está idêntico.
-        </div>
-
-        <!-- Botões de controle -->
-        <div class="controls">
-            <button class="btn" onclick="alternarRotacao()">Ligar/Desligar Rotação</button>
-            <button class="btn" onclick="resetarCamera()">Centralizar Câmera</button>
+        <div class="hint">
+            💡 Lembre-se de colocar o seu arquivo <code>.glb</code> na mesma pasta deste HTML e atualizar o nome em <code>src="..."</code>.
         </div>
     </div>
-
-    <script>
-        const modelViewer = document.querySelector('#modelo3d');
-
-        function alternarRotacao() {
-            modelViewer.autoRotate = !modelViewer.autoRotate;
-        }
-
-        function resetarCamera() {
-            modelViewer.cameraTarget = 'auto';
-            modelViewer.jumpCameraToGoal();
-        }
-    </script>
 
 </body>
 </html>
